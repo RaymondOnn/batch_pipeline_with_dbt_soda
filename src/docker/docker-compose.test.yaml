@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  airflow-test:
+    container_name: airflow-test
+    # environment:
+    #   - PYTHONPATH=./src
+    image: "airflow-dev:2.8.0"
+    build:
+      context: .
+      dockerfile: ./src/docker/Dockerfile
+    # . is a path relative to the docker-compose file  
+    volumes:
+      - ${PROJECT_DIR:-${PWD}}/src/airflow/dags:/opt/airflow/dags
+      - ${PROJECT_DIR:-${PWD}}/tests:/opt/airflow/tests
+      - ${PROJECT_DIR:-${PWD}}/pytest.ini:/opt/airflow/pytest.ini
+      - ${PROJECT_DIR:-${PWD}}/src/docker/run_tests.py:/opt/airflow/run_tests.py
+    # command: standalone
+    command: python run_tests.py

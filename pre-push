@@ -1,0 +1,6 @@
+#!/bin/sh
+# do nothing if there are no commits to push
+if [ -z "$(git log @{u}..)" ]; then
+    exit 0
+fi
+sh make test

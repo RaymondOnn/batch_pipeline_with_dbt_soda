@@ -1,0 +1,12 @@
+online_retail:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      keyfile: /opt/airflow/dags/online_retail/gcp/service_account.json 
+      project: online-retail-417320
+      dataset: online_retail
+      threads: 1
+      timeout_seconds: 300
+      location: US

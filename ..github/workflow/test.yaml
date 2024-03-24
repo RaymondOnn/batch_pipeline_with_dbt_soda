@@ -1,0 +1,43 @@
+name: Test DAGs
+
+on: [push, workflow_dispatch]
+push:
+    paths:
+      - ??
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get Code
+              uses: actions/checkout@v3
+            - name: Set Up Python
+              uses: actions/setup-python@v3
+              with:
+                python-version: "3.11"
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                pip install -r requirements.txt
+                pip check
+            - name: Lint with Flake8
+              run: |
+                pip install flake8
+                flake8 --ignore E501 dags --benchmark -v
+            - name: Check code format with black
+              run: | 
+                pip install pytest-black
+                pytest dags --black -v
+
+            - name: Caching
+              uses: actions/cache@v2
+              with:
+                path: ${{ env.pythonLocation }}
+                key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}
+            - name: Test DAGs with Pytest
+              run: |
+                  pip install pytest
+                  cd tests || exit
+                  # to add connection : airflow connections add name --conn-host host_name --conn-port 8080 --conn-type http
+                  pytest -v  tests.py
+                  

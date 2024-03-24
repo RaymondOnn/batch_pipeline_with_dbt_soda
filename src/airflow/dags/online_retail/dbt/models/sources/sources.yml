@@ -1,0 +1,10 @@
+
+# sources.yml
+version: 2
+
+sources:
+  - name: online_retail
+    database: online-retail-417320 # Put the project id!
+    tables:
+      - name: raw_invoices
+      - name: raw_country
