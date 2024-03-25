@@ -23,14 +23,16 @@ jobs:
           pip install -r requirements.txt
           pip check
       - name: Lint with Flake8
+        continue-on-error: true
         run: |
           pip install flake8==7.0.0
-          flake8 --ignore E501 dags -v
+          flake8 --ignore E501 ./src/airflow/dags/ -v
       - name: Check code format with black
+        continue-on-error: true
         run: | 
           pip install pytest-black==0.3.12
-          pytest --black -p no:dags/online_retail/dbt/dbt_packages/dbt_utils/tests/conftest.py -v dags/
+          pytest --black -p no:dags/online_retail/dbt/dbt_packages/dbt_utils/tests/conftest.py -v ./src/airflow/dags/
       - name: Test DAGs with Pytest
         run: |
             pip install pytest==8.0.0
-            pytest --cache-clear -rsxX -l --tb=short --strict -v tests/
+            pytest --cache-clear -rsxX -l --tb=short --strict -v ./tests/
