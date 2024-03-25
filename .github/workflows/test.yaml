@@ -1,6 +1,6 @@
 name: Test DAGs
 
-on: 
+on:
   workflow_dispatch:
   push:
     branches:
@@ -29,7 +29,7 @@ jobs:
           flake8 --ignore E501 ./src/airflow/dags/ -v
       - name: Check code format with black
         continue-on-error: true
-        run: | 
+        run: |
           pip install pytest-black==0.3.12
           pytest --black -p no:dags/online_retail/dbt/dbt_packages/dbt_utils/tests/conftest.py -v ./src/airflow/dags/
       - name: Test DAGs with Pytest

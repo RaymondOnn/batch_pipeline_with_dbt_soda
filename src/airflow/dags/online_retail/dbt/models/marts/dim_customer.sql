@@ -12,5 +12,5 @@ SELECT
     cust.*,
 	ctry.iso
 FROM customer_cte cust
-LEFT JOIN {{ source('online_retail', 'raw_country') }} ctry 
+LEFT JOIN {{ source('online_retail', 'raw_country') }} ctry
 	ON cust.country = ctry.nicename

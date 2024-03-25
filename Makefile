@@ -16,7 +16,7 @@ VENV_BIN=$(VENV_DIR)/bin
 PYTHON=${VENV_BIN}/python3
 PIP=$(VENV)/bin/pip
 
-GITIGNORE_PKGS=venv,python,JupyterNotebooks,Pycharm,VisualStudioCode,macOS 
+GITIGNORE_PKGS=venv,python,JupyterNotebooks,Pycharm,VisualStudioCode,macOS
 REPO_NAME=
 
 SODA_IMAGE  = soda_checks
@@ -67,12 +67,12 @@ boilerplate:  ## Add simple 'README.md' and .gitignore
 # ------------------------------------ Version Control -----------------------------------
 
 git_init:  ## Create a new git repository and add boilerplate code.
-	@git init -q 
+	@git init -q
 	@$(MAKE) -C $(CURDIR) boilerplate
 	@git add .gitignore README.md
 	git commit -nm'Add README and .gitignore files <automated msg>'
 
-gh_init: 
+gh_init:
 	gh repo create --public testRepo
 
 $(ENV)/bin/activate: requirements.txt ## create virtual environment
@@ -110,9 +110,9 @@ airflow_stop: ## stop airflow containers
 airflow_bash: ## start airflow bash shell
 	docker compose -f ./$(AIRFLOW_DOCKERFILE_DIR)/docker-compose.yaml exec -it $(AIRFLOW_SCHEDULER) /bin/bash
 
-.PHONY: airflow-img 
+.PHONY: airflow-img
 airflow_img: $(shell find src/docker -type f) ## build docker image for airflow
-	docker compose build --no-cache 
+	docker compose build --no-cache
 
 .PHONY: soda-img
 soda_img: $(shell find src/soda -type f) ## build docker image for soda checks
@@ -132,4 +132,4 @@ stop:
 
 .PHONY: test
 test:
-	docker compose -f $(AIRFLOW_DOCKERFILE_DIR)/docker-compose.test.yaml up               
+	docker compose -f $(AIRFLOW_DOCKERFILE_DIR)/docker-compose.test.yaml up

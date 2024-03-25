@@ -4,7 +4,7 @@ online_retail:
     dev:
       type: bigquery
       method: service-account
-      keyfile: /opt/airflow/dags/online_retail/gcp/service_account.json 
+      keyfile: /opt/airflow/dags/online_retail/gcp/service_account.json
       project: online-retail-417320
       dataset: online_retail
       threads: 1

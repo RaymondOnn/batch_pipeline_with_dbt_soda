@@ -1,7 +1,7 @@
 -- dim_datetime.sql
 
 -- Create a CTE to extract date and time components
-WITH datetime_cte AS (  
+WITH datetime_cte AS (
   SELECT DISTINCT
     InvoiceDate AS datetime_id,
     CASE

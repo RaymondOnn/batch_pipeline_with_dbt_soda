@@ -1,16 +1,21 @@
-from soda.scan import Scan
+from typing import Any
+
 import fire
 
-def check(scan_name:str, check_subdir:str, data_source:str='online_retail'):    
-    print('Running Soda Scan...')
-    config_file = 'configuration.yml'
-    checks_path = './checks'
+from soda.scan import Scan
+
+
+def check(
+    scan_name: str, check_subdir: str, data_source: str = "online_retail"
+) -> Any:  # noqa E501
+    print("Running Soda Scan...")
+    config_file = "configuration.yml"
+    checks_path = "./checks"
 
     if check_subdir:
-        checks_path += f'/{check_subdir}'
-    
-    
-    # Configure Scan object    
+        checks_path += f"/{check_subdir}"
+
+    # Configure Scan object
     scan = Scan()
     scan.set_verbose()
     scan.add_configuration_yaml_file(config_file)
@@ -23,8 +28,9 @@ def check(scan_name:str, check_subdir:str, data_source:str='online_retail'):
     print(scan.get_logs_text())
 
     if result != 0:
-        raise ValueError('Scan Scan Failed')
+        raise ValueError("Scan Scan Failed")
     return result
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     fire.Fire(check)

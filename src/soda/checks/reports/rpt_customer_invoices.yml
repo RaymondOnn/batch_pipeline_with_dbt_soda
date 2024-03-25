@@ -6,5 +6,3 @@ checks for rpt_customer_invoices:
   # Check fails if the total invoices is lower or equal to 0
   - min(total_invoices):
       fail: when <= 0
-
-

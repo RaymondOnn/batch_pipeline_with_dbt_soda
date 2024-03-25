@@ -4,7 +4,7 @@ checks for fct_invoices:
   # when the data type of those columns is other than specified
   - schema:
       fail:
-        when required column missing: 
+        when required column missing:
           [invoice_id, product_id, customer_id, datetime_id, quantity, total]
         when wrong column type:
           invoice_id: string

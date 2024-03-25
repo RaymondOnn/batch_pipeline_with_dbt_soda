@@ -1,11 +1,15 @@
 from airflow.decorators import dag
-from airflow.utils.dates import days_ago
 from airflow.operators.empty import EmptyOperator
 from airflow.providers.google.cloud.operators.bigquery import (
     BigQueryCreateEmptyTableOperator,
-    BigQueryInsertJobOperator,
-    BigQueryValueCheckOperator,
 )
+from airflow.providers.google.cloud.operators.bigquery import (
+    BigQueryInsertJobOperator,
+)  # noqa: E501
+from airflow.providers.google.cloud.operators.bigquery import (
+    BigQueryValueCheckOperator,
+)  # noqa: E501
+from airflow.utils.dates import days_ago
 from airflow.utils.trigger_rule import TriggerRule
 
 GCP_CONN = "gcp"
@@ -18,7 +22,7 @@ BQ_SRC_COUNTRY = "raw_country"
     schedule=None,
     catchup=False,
 )
-def online_retail__02_load_country():
+def online_retail__02_load_country() -> None:
     start = EmptyOperator(task_id="start")
 
     check_table_exists = BigQueryValueCheckOperator(
@@ -66,7 +70,13 @@ def online_retail__02_load_country():
 
     end = EmptyOperator(task_id="end", trigger_rule=TriggerRule.ONE_SUCCESS)
 
-    start >> check_table_exists >> create_country_table >> insert_country_info >> end
+    (
+        start
+        >> check_table_exists
+        >> create_country_table
+        >> insert_country_info
+        >> end
+    )  # noqa: E501
     check_table_exists >> end
 
 

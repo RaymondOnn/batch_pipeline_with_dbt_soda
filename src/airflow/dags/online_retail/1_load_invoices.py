@@ -1,15 +1,15 @@
 from airflow.decorators import dag
-from airflow.utils.dates import days_ago
 from airflow.models.baseoperator import chain
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
-from airflow.providers.google.cloud.transfers.local_to_gcs import (
-    LocalFilesystemToGCSOperator,
-)
+from airflow.providers.docker.operators.docker import DockerOperator
 from airflow.providers.google.cloud.transfers.gcs_to_bigquery import (
     GCSToBigQueryOperator,
 )
-from airflow.providers.docker.operators.docker import DockerOperator
+from airflow.providers.google.cloud.transfers.local_to_gcs import (
+    LocalFilesystemToGCSOperator,
+)
+from airflow.utils.dates import days_ago
 
 
 GCP_CONN = "gcp"
@@ -25,7 +25,7 @@ SODA_IMG = "soda_checks"
     schedule=None,
     catchup=False,
 )
-def online_retail__01_load_invoices():
+def online_retail__01_load_invoices() -> None:
 
     start = EmptyOperator(task_id="start")
 
@@ -51,7 +51,7 @@ def online_retail__01_load_invoices():
         source_objects=[GCS_DEST_PATH],
         destination_project_dataset_table=f"{BQ_DATASET}.raw_invoices",
         create_disposition="CREATE_IF_NEEDED",  # create table if not exists
-        write_disposition="WRITE_TRUNCATE",  # overwrites table. Other values: WRITE-APPEND/WRITE_EMPTY
+        write_disposition="WRITE_TRUNCATE",  # WRITE-APPEND/WRITE_EMPTY
         source_format="csv",
         skip_leading_rows=1,
         field_delimiter=",",

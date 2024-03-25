@@ -1,11 +1,14 @@
+from cosmos.airflow.task_group import DbtTaskGroup
+from cosmos.config import ExecutionConfig
+from cosmos.config import RenderConfig
+from cosmos.constants import LoadMode
+from online_retail.dbt.cosmos_config import DBT_CONFIG
+from online_retail.dbt.cosmos_config import DBT_PROJECT_CONFIG
+
 from airflow.decorators import dag
-from airflow.utils.dates import days_ago
 from airflow.operators.empty import EmptyOperator
 from airflow.providers.docker.operators.docker import DockerOperator
-from cosmos.airflow.task_group import DbtTaskGroup
-from online_retail.dbt.cosmos_config import DBT_CONFIG, DBT_PROJECT_CONFIG
-from cosmos.constants import LoadMode
-from cosmos.config import RenderConfig, ExecutionConfig
+from airflow.utils.dates import days_ago
 
 
 BQ_DATASET = "online_retail"
@@ -18,12 +21,12 @@ DBT_VENV_EXEC_PATH = "/opt/airflow/dbt_venv/bin/dbt"
     schedule=None,
     catchup=False,
 )
-def online_retail__03_transform():
+def online_retail__03_transform() -> None:
 
     start = EmptyOperator(task_id="start")
 
     # DbtTaskGroup is a custom TaskGroup from Cosmos
-    # Info regarding configs: https://astronomer.github.io/astronomer-cosmos/configuration/render-config.html
+    # Info regarding configs: https://astronomer.github.io/astronomer-cosmos/configuration/render-config.html # noqa: E501
     dbt_marts = DbtTaskGroup(
         group_id="dbt_marts",
         profile_config=DBT_CONFIG,
