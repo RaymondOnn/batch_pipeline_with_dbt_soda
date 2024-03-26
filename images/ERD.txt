@@ -4,39 +4,54 @@
 // Docs: https://dbml.dbdiagram.io/docs
 
 Table dim_customer {
-  customer_id varchar
-  country varchar
-  iso varchar
+  customer_key string [primary key]
+  customer_id integer
+  country string
+  country_code string
+  created_on timestamp
+  last_updated timestamp
 }
 
 Table dim_product {
-  product_id varchar [primary key]
-  stock_code varchar
-  description varchar
-  price float
+  product_key string [primary key]
+  stock_code string
+  product_desc string
+  unit_price numeric
+  created_on timestamp
+  last_updated timestamp
 }
 
 Table dim_date {
-  datetime_id varchar [primary key]
-  datetime datetime
+  date_key date [primary key]
   year integer
-  month integer
-  day integer
-  hour integer
-  minute integer
-  weekday integer
+  half_year string
+  quarter_num integer
+  quarter string
+  month_num integer
+  month_name_long string
+  month_name_short string
+  week_num integer
+  day_num_of_week integer
+  day_num_of_year integer
+  created_on timestamp
+  last_updated timestamp
 }
 
 Table fct_invoices {
   invoice_id string [primary key]
-  datetime_id varchar
-  product_id varchar
-  customer_id varchar
+  product_key string
+  customer_key string
+  invoice_date date
+  invoice_time time
   quantity integer
-  total float
+  customer_id integer
+  total_sales float
+  is_cancelled bool
+  created_on timestamp
+  last_updated timestamp
 }
-Ref: fct_invoices.customer_id > dim_customer.customer_id // many-to-one
+Ref: fct_invoices.customer_key > dim_customer.customer_key // many-to-one
 
-Ref: fct_invoices.datetime_id > dim_date.datetime_id // many-to-one
+Ref: fct_invoices.invoice_date > dim_date.date_key // many-to-one
 
-Ref: fct_invoices.product_id > dim_product.product_id // many-to-one
+Ref: fct_invoices.product_key > dim_product.product_key // many-to-one
