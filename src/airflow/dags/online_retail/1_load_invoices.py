@@ -1,7 +1,6 @@
 from airflow.decorators import dag
 from airflow.models.baseoperator import chain
 from airflow.operators.empty import EmptyOperator
-from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.providers.docker.operators.docker import DockerOperator
 from airflow.providers.google.cloud.transfers.gcs_to_bigquery import (
     GCSToBigQueryOperator,
@@ -28,12 +27,6 @@ SODA_IMG = "soda_checks"
 def online_retail__01_load_invoices() -> None:
 
     start = EmptyOperator(task_id="start")
-
-    start_load_country = TriggerDagRunOperator(
-        task_id="trigger_load_country",
-        trigger_dag_id="online_retail__02_load_country",
-        wait_for_completion=False,
-    )
 
     upload_csv_to_gcs = LocalFilesystemToGCSOperator(
         task_id="upload_csv_to_gcs",
@@ -66,7 +59,7 @@ def online_retail__01_load_invoices() -> None:
             {"name": "CustomerID", "type": "STRING", "mode": "NULLABLE"},
             {"name": "Country", "type": "STRING", "mode": "NULLABLE"},
         ],
-        encoding="utf-8",
+        encoding="ISO-8859-1",
     )
 
     check_invoices = DockerOperator(
@@ -81,28 +74,13 @@ def online_retail__01_load_invoices() -> None:
         network_mode="bridge",
     )
 
-    start_transform = TriggerDagRunOperator(
-        task_id="start_transform",
-        trigger_dag_id="online_retail__03_transform",
-        wait_for_completion=True,
-    )
-
-    start_report = TriggerDagRunOperator(
-        task_id="start_report",
-        trigger_dag_id="online_retail__04_report",
-        wait_for_completion=True,
-    )
-
     end = EmptyOperator(task_id="end")
 
     chain(
         start,
-        start_load_country,
         upload_csv_to_gcs,
         gcs_to_bq,
         check_invoices,
-        start_transform,
-        start_report,
         end,
     )
 
