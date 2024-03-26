@@ -5,14 +5,14 @@ checks for fct_invoices:
   - schema:
       fail:
         when required column missing:
-          [invoice_id, product_id, customer_id, datetime_id, quantity, total]
+          [invoice_id, product_key, customer_key, invoice_date, quantity, total_sales]
         when wrong column type:
           invoice_id: string
-          product_id: string
-          customer_id: string
-          datetime_id: string
+          product_key: string
+          customer_key: string
+          invoice_date: date
           quantity: int
-          total: float64
+          total_sales: numeric
   # Check fails when NULL values in the column
   - missing_count(invoice_id) = 0:
       name: All invoices have a key
@@ -20,6 +20,6 @@ checks for fct_invoices:
   - failed rows:
       name: All invoices have a positive total amount
       fail query: |
-        SELECT invoice_id, total
+        SELECT invoice_id, total_sales
         FROM fct_invoices
-        WHERE total < 0
+        WHERE total_sales < 0

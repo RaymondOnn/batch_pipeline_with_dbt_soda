@@ -10,7 +10,7 @@ DBT_CONFIG = ProfileConfig(
     target_name="dev",
     profiles_yml_filepath=Path(
         "/opt/airflow/dags/online_retail/dbt/profiles.yml"
-    ),  # noqa: E501
+    ),  # noqa E501
 )
 
 DBT_PROJECT_CONFIG = ProjectConfig(

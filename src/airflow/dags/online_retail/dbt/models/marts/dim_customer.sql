@@ -1,16 +1,24 @@
 -- dim_customer.sql
 
 -- Create the dimension table
-WITH customer_cte AS (
+WITH base AS (
 	SELECT DISTINCT
-	    {{ dbt_utils.generate_surrogate_key(['CustomerID', 'Country']) }} as customer_id,
-	    Country AS country
-	FROM {{ source('online_retail', 'raw_invoices') }}
-	WHERE CustomerID IS NOT NULL
+		customer_key,
+		customer_id,
+		CASE
+			WHEN country = 'EIRE' THEN 'Ireland'
+			WHEN country = 'Unspecified' THEN 'Unknown'
+			ELSE country
+		END AS country,
+	FROM {{ ref('stg_invoices') }}
 )
 SELECT
-    cust.*,
-	ctry.iso
-FROM customer_cte cust
+	CAST(base.customer_key as STRING) AS customer_key,
+    base.customer_id,
+	base.country,
+	CAST(ctry.iso as STRING) AS country_code,
+	current_timestamp() as created_on,
+    current_timestamp() as last_updated,
+FROM base
 LEFT JOIN {{ source('online_retail', 'raw_country') }} ctry
-	ON cust.country = ctry.nicename
+	ON base.country = ctry.nicename
