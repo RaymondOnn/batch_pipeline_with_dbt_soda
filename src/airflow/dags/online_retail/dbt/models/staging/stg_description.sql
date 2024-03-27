@@ -4,15 +4,17 @@ WITH base AS (
     SELECT
         stock_code,
         product_desc,
-        count(1) as n_desc,
+        count(*) AS n_desc
     FROM {{ ref('stg_invoices') }}
+    WHERE is_non_sale = False
     GROUP BY stock_code, product_desc
 )
+
 SELECT
     stock_code,
-    product_desc,
+    product_desc
 FROM base
-QUALIFY ROW_NUMBER() OVER(
+QUALIFY row_number() OVER (
     PARTITION BY stock_code
     ORDER BY n_desc DESC
 ) = 1

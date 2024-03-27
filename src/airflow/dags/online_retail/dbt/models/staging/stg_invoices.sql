@@ -17,8 +17,16 @@ SELECT
     *,
     {{ dbt_utils.generate_surrogate_key(['customer_id', 'country']) }} as customer_key,
     {{ dbt_utils.generate_surrogate_key(['stock_code', 'unit_price']) }} as product_key,
+    CASE
+        WHEN STARTS_WITH(invoice_id, 'C') THEN True
+        ELSE False
+    END as is_cancelled,
+    CASE
+        WHEN REGEXP_CONTAINS(stock_code, '[0-9]{5}.*') THEN False
+        ELSE True
+    END as is_non_sale,
 FROM base
-QUALIFY ROW_NUMBER() OVER(
+QUALIFY ROW_NUMBER() OVER (
     PARTITION BY invoice_id, stock_code, quantity, unit_price
     ORDER BY invoice_id, stock_code, quantity, unit_price
 ) = 1
