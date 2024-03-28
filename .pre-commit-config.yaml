@@ -6,11 +6,11 @@ repos:
         -   id: black
             args: [--safe]
 
-    # -   repo: https://github.com/sqlfluff/sqlfluff
-    #     rev: 3.0.3
-    #     hooks:
-    #     -   id: sqlfluff-fix
-    #         args: ['--dialect=bigquery']
+    -   repo: https://github.com/sqlfluff/sqlfluff
+        rev: 3.0.3
+        hooks:
+        -   id: sqlfluff-fix
+            args: ['--dialect=bigquery', '-–ignore=parsing,templating',  './src/dags/']
 
     -   repo: https://github.com/pre-commit/pre-commit-hooks
         rev: v3.2.0
