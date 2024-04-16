@@ -15,7 +15,7 @@ WITH base AS (
 )
 SELECT
     *,
-    {{dbt_utils.generate_surrogate_key(['customer_id', 'country'])}} AS customer_key,
+{{dbt_utils.generate_surrogate_key(['customer_id', 'country'])}} AS customer_key,
     {{dbt_utils.generate_surrogate_key(['stock_code', 'unit_price'])}} AS product_key,
     CASE
         WHEN STARTS_WITH(invoice_id, 'C') THEN True

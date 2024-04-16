@@ -4,6 +4,7 @@ templater = jinja
 sql_file_exts = .sql,.sql.j2,.dml,.ddl
 exclude_rules = ambiguous.column_count, structure.column_order
 max_line_length = 120
+exclude_rules = LT02
 
 [sqlfluff:indentation]
 allow_implicit_indents = True
@@ -20,10 +21,11 @@ line_position = trailing
 # [sqlfluff:templater]
 # unwrap_wrapped_queries = True
 
-[sqlfluff:templater:dbt]
-project_dir = ./src/airflow/dags/online_retail/dbt/models
+[sqlfluff:templater:jinja]
+project_dir = ./src/airflow/dags/online_retail/dbt/
+profiles_dir = ./src/airflow/dags/online_retail/dbt/
 apply_dbt_builtins = True
-load_macros_from_path=./src/airflow/dags/online_retail/dbt/dbt_packages/dbt_utils/macros
+load_macros_from_path=./src/airflow/dags/online_retail/dbt/dbt_packages/dbt_utils/macro/
 
 [tool.sqlfluff.rules.capitalisation.keywords]
 capitalisation_policy = "upper"
