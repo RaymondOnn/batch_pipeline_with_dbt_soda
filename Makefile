@@ -118,18 +118,14 @@ airflow_img: $(shell find src/docker -type f) ## build docker image for airflow
 soda_img: $(shell find src/soda -type f) ## build docker image for soda checks
 	docker build -f $(SODA_DOCKERFILE_DIR)/Dockerfile -t $(SODA_IMAGE) .
 
-.PHONY: meta-start
-meta_start: ## start metabase docker container
-	docker compose -f $(AIRFLOW_DOCKERFILE_DIR)/docker-compose.viz.yaml up -d
-
 .PHONY: start
 start:
-	docker compose -f ./$(AIRFLOW_DOCKERFILE_DIR)/docker-compose.yaml -f $(AIRFLOW_DOCKERFILE_DIR)/docker-compose.viz.yaml up -d
+	make airflow_start
 
 .PHONY: stop
 stop:
-	docker compose -f ./$(AIRFLOW_DOCKERFILE_DIR)/docker-compose.yaml -f $(AIRFLOW_DOCKERFILE_DIR)/docker-compose.viz.yaml down
+	make airflow_stop
 
 .PHONY: test
 test:
-	docker compose -f $(AIRFLOW_DOCKERFILE_DIR)/docker-compose.test.yaml up
+	docker compose -f $(AIRFLOW_DOCKERFILE_DIR)/docker-compose.test.yaml up --force-recreate
