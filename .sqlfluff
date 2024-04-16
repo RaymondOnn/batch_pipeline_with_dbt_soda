@@ -2,9 +2,8 @@
 dialect = bigquery
 templater = jinja
 sql_file_exts = .sql,.sql.j2,.dml,.ddl
-exclude_rules = ambiguous.column_count, structure.column_order
+exclude_rules = ambiguous.column_count, structure.column_order, LT02
 max_line_length = 120
-exclude_rules = LT02
 
 [sqlfluff:indentation]
 allow_implicit_indents = True
