@@ -1,5 +1,5 @@
 [sqlfluff]
-dialect = bigquery
+dialect = BigQuery
 templater = jinja
 sql_file_exts = .sql,.sql.j2,.dml,.ddl
 exclude_rules = ambiguous.column_count, structure.column_order
@@ -20,7 +20,7 @@ line_position = trailing
 # [sqlfluff:templater]
 # unwrap_wrapped_queries = True
 
-[sqlfluff:templater:jinja]
+[sqlfluff:templater:dbt]
 project_dir = ./src/airflow/dags/online_retail/dbt/models
 apply_dbt_builtins = True
 load_macros_from_path=./src/airflow/dags/online_retail/dbt/dbt_packages/dbt_utils/macros
