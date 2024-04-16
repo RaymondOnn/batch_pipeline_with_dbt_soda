@@ -1,6 +1,6 @@
 [sqlfluff]
 dialect = bigquery
-templater = dbt
+templater = placeholder
 sql_file_exts = .sql,.sql.j2,.dml,.ddl
 exclude_rules = ambiguous.column_count, structure.column_order
 max_line_length = 120
