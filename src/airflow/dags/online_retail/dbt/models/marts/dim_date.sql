@@ -28,7 +28,7 @@ dates_core AS (
 SELECT
     *,
     LEFT(month_name_long, 3) AS month_name_short,
-    CONCAT('Q', quarter_num) AS quarter,
+    CONCAT('Q', quarter_num) AS quarter_name,
     IF(quarter_num IN (1, 2), 'H1', 'H2') AS half_year,
     CURRENT_TIMESTAMP() AS created_on,
     CURRENT_TIMESTAMP() AS last_updated
