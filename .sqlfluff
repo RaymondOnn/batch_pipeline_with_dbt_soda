@@ -1,0 +1,22 @@
+[sqlfluff]
+dialect = bigquery
+templater = jinja
+sql_file_exts = .sql,.sql.j2,.dml,.ddl
+exclude_rules = ambiguous.column_count, structure.column_order
+max_line_length = 120
+
+[sqlfluff:indentation]
+allow_implicit_indents = True
+
+indented_joins = False
+indented_using_on = True
+template_blocks_indent = False
+
+[sqlfluff:templater]
+unwrap_wrapped_queries = True
+
+[sqlfluff:templater:jinja]
+project_dir = ./src/airflow/dags/online_retail/dbt
+
+[tool.sqlfluff.rules.capitalisation.keywords]
+capitalisation_policy = "upper"
