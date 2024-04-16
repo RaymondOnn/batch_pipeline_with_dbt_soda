@@ -1,3 +1,4 @@
+---
 exclude: 'src/airflow/dags/online_retail/dbt/dbt_packages'
 repos:
     -   repo: https://github.com/psf/black
