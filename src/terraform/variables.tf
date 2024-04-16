@@ -21,6 +21,6 @@ variable "bq_dataset_name" {
 }
 
 variable "storage_bucket_name" {
-  type        = string
-  default     = "some_bucket"
+  type    = string
+  default = "some_bucket"
 }
