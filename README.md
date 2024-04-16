@@ -11,9 +11,7 @@ The dataset contains the transactions occurring between 01/12/2010 and 09/12/201
 Access to the dataset is accessible on [Kaggle](https://www.kaggle.com/datasets/tunguz/online-retail).
 
 ## Project Objective
-- To construct a data pipeline that retrieves, stores, cleans, and presents the data through a straightforward dashboard for visualization. This allows us analyze various aspects such as the types of albums preferred by certain artists, the number of track releases over the years, albums with a high number of tracks, artists with a significant volume of tracks, and the audio features of all tracks in the dataset, among others.
 
-- Set up automated testing (using GitHub actions)
 
 ### Built With
 - Dataset: [Kaggle](https://www.kaggle.com/datasets/tunguz/online-retail)
@@ -109,7 +107,7 @@ To run the pipeline you'll need:
     ```
 - Otherwise, use this command instead
     ``` sh
-    docker compose -f ./docker-compose.yaml up -d
+    docker compose -f ./src/docker/docker-compose.yaml up -d
     ```
 
 ### Start the pipeline
