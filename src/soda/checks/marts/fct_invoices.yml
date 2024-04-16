@@ -1,4 +1,4 @@
-# fct_invoices.yml
+---
 checks for fct_invoices:
   # Check fails when invoice_id, quantity, total is missing or
   # when the data type of those columns is other than specified

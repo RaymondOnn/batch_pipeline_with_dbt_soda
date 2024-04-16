@@ -1,3 +1,5 @@
+---
+
 online_retail:
   target: dev
   outputs:

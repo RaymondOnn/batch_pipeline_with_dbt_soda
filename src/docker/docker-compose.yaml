@@ -71,9 +71,9 @@ x-airflow-common:
   volumes:
     - ${PROJECT_DIR:-${PWD}}/src/airflow/dags:/opt/airflow/dags
     - ${PROJECT_DIR:-${PWD}}/src/airflow/logs:/opt/airflow/logs # required to view dag logs
+    #- ${PROJECT_DIR:-${PWD}}/include:/opt/airflow/include
     #- ${PROJECT_DIR:-${PWD}}/config:/opt/airflow/config
     #- ${PROJECT_DIR:-${PWD}}/plugins:/opt/airflow/plugins
-    #- ${PROJECT_DIR:-${PWD}}/include:/opt/airflow/include
     - /var/run/docker.sock:/var/run/docker.sock
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:

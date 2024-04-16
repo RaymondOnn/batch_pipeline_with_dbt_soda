@@ -1,8 +1,10 @@
+---
 version: "3.9"
 
 services:
   airflow-test:
     container_name: airflow-test
+    hostname: airflow-test
     # environment:
     #   - PYTHONPATH=./src
     image: "airflow-dev:2.8.0"
@@ -16,4 +18,5 @@ services:
       - ${PROJECT_DIR:-${PWD}}/pytest.ini:/opt/airflow/pytest.ini
       - ${PROJECT_DIR:-${PWD}}/src/docker/run_tests.py:/opt/airflow/run_tests.py
     # command: standalone
-    command: python run_tests.py
+    # command: python run_tests.py
+    command: python -m pytest --cache-clear -rsxX -l --tb=short --strict -v tests/

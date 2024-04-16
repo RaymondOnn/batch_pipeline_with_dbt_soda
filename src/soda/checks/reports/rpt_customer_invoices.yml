@@ -1,4 +1,4 @@
-# report_customer_invoices.yml
+---
 checks for rpt_customer_invoices:
   # Check fails if the country column has any missing values
   - missing_count(country) = 0:

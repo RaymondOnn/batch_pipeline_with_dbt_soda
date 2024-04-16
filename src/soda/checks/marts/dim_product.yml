@@ -1,4 +1,4 @@
-# dim_product.yml
+---
 checks for dim_product:
   # Check fails when product_key or english_product_name is missing, OR
   # when the data type of those columns is other than specified

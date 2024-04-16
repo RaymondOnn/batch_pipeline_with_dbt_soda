@@ -1,4 +1,4 @@
-# report_product_invoices.yml
+---
 checks for rpt_product_invoices:
   # Check fails if the stock_code column has any missing values
   - missing_count(stock_code) = 0:

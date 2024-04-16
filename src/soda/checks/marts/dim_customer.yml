@@ -1,4 +1,4 @@
-# dim_customer.yml
+---
 checks for dim_customer:
   - schema:
       fail:
