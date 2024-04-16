@@ -4,6 +4,9 @@ from cosmos.config import RenderConfig
 from cosmos.constants import LoadMode
 from online_retail.dbt.cosmos_config import DBT_CONFIG
 from online_retail.dbt.cosmos_config import DBT_PROJECT_CONFIG
+from online_retail.params import DBT_VENV_EXEC_PATH
+from online_retail.params import DS_TRANSFORM_BQ
+from online_retail.params import SODA_IMG
 
 from airflow.decorators import dag
 from airflow.operators.empty import EmptyOperator
@@ -13,14 +16,9 @@ from airflow.utils.dates import days_ago
 # from airflow.models.connection import Connection
 
 
-BQ_DATASET = "online_retail"
-SODA_IMG = "soda_checks"
-DBT_VENV_EXEC_PATH = "/opt/airflow/dbt_venv/bin/dbt"
-
-
 @dag(
     start_date=days_ago(0),
-    schedule=None,
+    schedule=[DS_TRANSFORM_BQ],
     catchup=False,
 )
 def online_retail__05_report() -> None:

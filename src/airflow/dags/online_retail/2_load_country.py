@@ -1,3 +1,9 @@
+from online_retail.params import BQ_DATASET
+from online_retail.params import BQ_SRC_COUNTRY
+from online_retail.params import DS_COUNTRY_BQ
+from online_retail.params import DS_START
+from online_retail.params import GCP_CONN
+
 from airflow.decorators import dag
 from airflow.operators.empty import EmptyOperator
 from airflow.providers.google.cloud.operators.bigquery import (
@@ -12,14 +18,10 @@ from airflow.providers.google.cloud.operators.bigquery import (
 from airflow.utils.dates import days_ago
 from airflow.utils.trigger_rule import TriggerRule
 
-GCP_CONN = "gcp"
-BQ_DATASET = "online_retail"
-BQ_SRC_COUNTRY = "raw_country"
-
 
 @dag(
     start_date=days_ago(0),
-    schedule=None,
+    schedule=[DS_START],
     catchup=False,
 )
 def online_retail__02_load_country() -> None:
@@ -68,7 +70,11 @@ def online_retail__02_load_country() -> None:
         location="US",
     )
 
-    end = EmptyOperator(task_id="end", trigger_rule=TriggerRule.ONE_SUCCESS)
+    end = EmptyOperator(
+        task_id="end",
+        trigger_rule=TriggerRule.ONE_SUCCESS,
+        outlets=[DS_COUNTRY_BQ],
+    )
 
     (
         start

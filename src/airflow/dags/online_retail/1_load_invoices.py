@@ -1,3 +1,12 @@
+from common.defaults import dag_default_args
+from online_retail.params import BQ_DATASET
+from online_retail.params import DS_INVOICES_BQ
+from online_retail.params import DS_START
+from online_retail.params import GCP_CONN
+from online_retail.params import GCS_BUCKET
+from online_retail.params import GCS_DEST_PATH
+from online_retail.params import SODA_IMG
+
 from airflow.decorators import dag
 from airflow.models.baseoperator import chain
 from airflow.operators.empty import EmptyOperator
@@ -8,21 +17,12 @@ from airflow.providers.google.cloud.transfers.gcs_to_bigquery import (
 from airflow.providers.google.cloud.transfers.local_to_gcs import (
     LocalFilesystemToGCSOperator,
 )
-from airflow.utils.dates import days_ago
-
-
-GCP_CONN = "gcp"
-GCS_BUCKET = "dbt_soda_online_retail"
-GCS_DEST_PATH = "raw/online_retail.csv"
-BQ_DATASET = "online_retail"
-BQ_SRC_INVOICES = "raw_invoices"
-SODA_IMG = "soda_checks"
 
 
 @dag(
-    start_date=days_ago(0),
-    schedule=None,
-    catchup=False,
+    default_args=dag_default_args,
+    schedule=[DS_START],  # None
+    catchup=dag_default_args["catchup"],
 )
 def online_retail__01_load_invoices() -> None:
 
@@ -74,7 +74,10 @@ def online_retail__01_load_invoices() -> None:
         network_mode="bridge",
     )
 
-    end = EmptyOperator(task_id="end")
+    end = EmptyOperator(
+        task_id="end",
+        outlets=[DS_INVOICES_BQ],
+    )
 
     chain(
         start,
