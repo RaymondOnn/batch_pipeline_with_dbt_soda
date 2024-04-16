@@ -1,6 +1,6 @@
 [sqlfluff]
 dialect = bigquery
-templater = jinja
+templater = dbt
 sql_file_exts = .sql,.sql.j2,.dml,.ddl
 exclude_rules = ambiguous.column_count, structure.column_order
 max_line_length = 120
@@ -16,7 +16,7 @@ template_blocks_indent = False
 unwrap_wrapped_queries = True
 
 [sqlfluff:templater:jinja]
-project_dir = ./src/airflow/dags/online_retail/dbt
+project_dir = ./src/airflow/dags/online_retail/dbt/models
 
 [tool.sqlfluff.rules.capitalisation.keywords]
 capitalisation_policy = "upper"
