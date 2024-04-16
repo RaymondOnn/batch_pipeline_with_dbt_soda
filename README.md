@@ -1,9 +1,8 @@
 # Data Pipeline Project for Online Retail Store
 
-An end-to-end pipeline that extract data from `.csv` files and transforms it to create data models for analytics use cases
 ## Introduction
 
-With this project, I constructed a data pipeline tasked with loading and processing data retrieved from a Kaggle dataset.
+With this project, I constructed an end-to-end pipeline that extract data from `.csv` files and transforms it to create data models for analytics use cases
 
 ## The dataset
 The dataset contains the transactions occurring between 01/12/2010 and 09/12/2011 for a UK-based and registered non-store online retail company.The company mainly sells unique all-occasion gifts. Many customers of the company are wholesalers.
@@ -13,7 +12,7 @@ Access to the dataset is accessible on [Kaggle](https://www.kaggle.com/datasets/
 ## Project Objective
 
 
-### Built With
+## Built With
 - Dataset: [Kaggle](https://www.kaggle.com/datasets/tunguz/online-retail)
 - Infrastructure as Code: Terraform
 - Workflow Orchestration: Airflow
