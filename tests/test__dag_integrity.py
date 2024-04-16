@@ -1,4 +1,19 @@
-def test_dagBag(dag_bag):
+import logging
+from contextlib import contextmanager
+
+
+@contextmanager
+def suppress_logging(namespace):
+    logger = logging.getLogger(namespace)
+    old_value = logger.disabled
+    logger.disabled = True
+    try:
+        yield
+    finally:
+        logger.disabled = old_value
+
+
+def test_dagbag(dag_bag):
     """
     Validate DAG files using Airflow's DagBag
     Includes sanity checks e.g. do task have required arguments,
@@ -19,3 +34,10 @@ def test_dag_id_contains_prefix(dag_bag):
         print(dag_id, dag)
 
         assert str.lower(dag_id).find("__") != -1
+
+
+# def test_task_count(dag_bag):
+#         """Check task count for a dag"""
+#         dag_id='check_for_new_files'
+#         dag = dag_bag.get_dag(dag_id)
+#         assert len(dag.tasks) == 1

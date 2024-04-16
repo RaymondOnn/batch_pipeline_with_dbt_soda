@@ -15,7 +15,7 @@ Access to the dataset is accessible on [Kaggle](https://www.kaggle.com/datasets/
 
 - Set up automated testing (using GitHub actions)
 
-### Built With:
+### Built With
 - Dataset: [Kaggle](https://www.kaggle.com/datasets/tunguz/online-retail)
 - Infrastructure as Code: Terraform
 - Workflow Orchestration: Airflow
@@ -104,15 +104,15 @@ To run the pipeline you'll need:
 ### Start the Docker containers
 - Before running the Docker containers, please check that Docker is up and running
 - if you have `make` installed
-    ```yaml
+    ``` yaml
     make start
     ```
 - Otherwise, use this command instead
-    ```
+    ``` sh
     docker compose -f ./docker-compose.yaml up -d
     ```
 
 ### Start the pipeline
-- Go to http://localhost:8080 to access the Airflow UI. You might need to wait some time for the containers to fully start
+- Go to <http://localhost:8080> to access the Airflow UI. You might need to wait some time for the containers to fully start
 - Log into Airflow using `airflow` as both the user and password
 - To start the pipeline, run the dag named `online_retail__00`. This dag will trigger the subsequent dags that make up the pipeline

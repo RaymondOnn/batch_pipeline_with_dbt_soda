@@ -1,4 +1,6 @@
+import logging
 import os
+from contextlib import contextmanager
 
 import pytest
 
@@ -23,6 +25,18 @@ print(os.environ["AIRFLOW__HOME"])
 # shutil.rmtree(os.path.join(os.environ["AIRFLOW_HOME"], "logs"))
 
 
+@contextmanager
+def suppress_logging(namespace):
+    logger = logging.getLogger(namespace)
+    old_value = logger.disabled
+    logger.disabled = True
+    try:
+        yield
+    finally:
+        logger.disabled = old_value
+
+
 @pytest.fixture(params=["./dags/"])
 def dag_bag(request):
-    return DagBag(dag_folder=request.param, include_examples=False)
+    with suppress_logging("airflow"):
+        return DagBag(dag_folder=request.param, include_examples=False)
