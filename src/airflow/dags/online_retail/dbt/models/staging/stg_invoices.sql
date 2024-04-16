@@ -10,8 +10,8 @@ WITH base AS (
         CAST(country AS STRING) AS country
     FROM {{ source('online_retail', 'raw_invoices') }}
     WHERE TRUE
-        AND UnitPrice > 0
-        AND Quantity > 0
+        AND unitprice > 0
+        AND quantity > 0
 )
 SELECT
     *,

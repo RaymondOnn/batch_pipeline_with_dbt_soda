@@ -22,6 +22,8 @@ line_position = trailing
 
 [sqlfluff:templater:jinja]
 project_dir = ./src/airflow/dags/online_retail/dbt/models
+apply_dbt_builtins = True
+load_macros_from_path=./src/airflow/dags/online_retail/dbt/dbt_packages/dbt_utils/macros
 
 [tool.sqlfluff.rules.capitalisation.keywords]
 capitalisation_policy = "upper"
