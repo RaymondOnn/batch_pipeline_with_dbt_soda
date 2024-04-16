@@ -19,3 +19,8 @@ variable "bq_dataset_name" {
   description = "Dataset in BigQuery where raw data (from Google Cloud Storage) will be loaded."
   default     = "some_dataset"
 }
+
+variable "storage_bucket_name" {
+  type        = string
+  default     = "some_bucket"
+}

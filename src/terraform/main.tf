@@ -9,11 +9,11 @@ terraform {
 
 provider "google" {
   project     = var.project_id
-  credentials = file("./src/airflow/dags/online_retail/gcp/service_account.jsonservice_account.json")
+  credentials = file("../airflow/dags/online_retail/gcp/service_account.json")
 }
 
-resource "google_storage_bucket" "spotify_datalake" {
-  name                        = "${local.DE_2004_PROJECT_DATALAKE}_${var.project}"
+resource "google_storage_bucket" "gcp_bucket" {
+  name                        = var.storage_bucket_name
   location                    = var.region
   storage_class               = var.storage_class
   uniform_bucket_level_access = true
@@ -32,7 +32,8 @@ resource "google_storage_bucket" "spotify_datalake" {
   force_destroy = true
 }
 
-resource "google_bigquery_dataset" "online_retail" {
+resource "google_bigquery_dataset" "bq_dataset" {
   project    = var.project_id
   dataset_id = var.bq_dataset_name
+  location   = var.region
 }
