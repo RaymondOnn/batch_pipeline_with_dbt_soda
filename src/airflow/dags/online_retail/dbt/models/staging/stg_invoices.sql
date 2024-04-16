@@ -15,16 +15,10 @@ WITH base AS (
 )
 SELECT
     *,
-{{dbt_utils.generate_surrogate_key(['customer_id', 'country'])}} AS customer_key,
-    {{dbt_utils.generate_surrogate_key(['stock_code', 'unit_price'])}} AS product_key,
-    CASE
-        WHEN STARTS_WITH(invoice_id, 'C') THEN True
-        ELSE False
-    END AS is_cancelled,
-    CASE
-        WHEN REGEXP_CONTAINS(stock_code, '[0-9]{5}.*') THEN False
-        ELSE True
-    END AS is_non_sale,
+    {{ dbt_utils.generate_surrogate_key(['customer_id', 'country']) }} AS customer_key,
+    {{ dbt_utils.generate_surrogate_key(['stock_code', 'unit_price']) }} AS product_key,
+    STARTS_WITH(invoice_id, 'C') AS is_cancelled,
+    NOT REGEXP_CONTAINS(stock_code, '[0-9]{5}.*') AS is_non_sale
 FROM base
 QUALIFY ROW_NUMBER() OVER (
     PARTITION BY invoice_id, stock_code, quantity, unit_price
