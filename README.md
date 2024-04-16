@@ -65,8 +65,8 @@ sequenceDiagram
 ![alt text](images/ERD.svg)
 
 ### Data Visualisation
-![alt text](images/overview.PNG)
-![alt text](images/product_view.PNG)
+![alt text](images/overview.png)
+![alt text](images/product_view.png)
 
 ## Getting Started
 
